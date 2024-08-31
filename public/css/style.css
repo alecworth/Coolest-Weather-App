@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.responsive-text {
+    font-size: clamp(0.875rem, 1.5vw, 1.25rem); /* Adjust the values as needed */
+}

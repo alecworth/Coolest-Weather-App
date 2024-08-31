@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather</title>
+    <link rel="stylesheet" href="./css/output.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #a2c2e2, #f3f4f6); /* Subtle gradient background */
+        }
+        .card {
+            border: 1px solid #d1d5db; /* Light border around cards */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+        .card img {
+            border-radius: 50%; /* Round images */
+        }
+        .heading {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-blue-200 flex items-center justify-center min-h-screen">
+    <div class="w-full max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg">
+        <!-- Heading Section -->
+        <div class="flex flex-row justify-center mb-8">
+            <h1 class="text-4xl font-bold text-blue-400 text-center mt-4 mx-2 heading">Tempest</h1>
+            <h1 class="text-4xl font-bold text-center my-4 heading">Weather</h1>
+        </div>
+
+        <div class="flex justify-center mb-8">
+            <input id="search-bar" type="text" class="p-2 border border-gray-300 rounded-lg" placeholder="Search for a location">
+            <button id="searchButton" class="ml-4 bg-blue-500 text-white px-4 py-2 rounded-lg">Search</button>
+        </div>
+
+        <!-- Weather Container -->
+        <div id="weather-container" class="flex flex-wrap justify-center mb-8 gap-4">
+            <% if (weather && weather.length > 0) { %>
+                <% if (weather[0].name.includes("night")) { %>
+                    <div class="flex flex-col items-center card bg-blue-100 shadow-lg rounded-lg p-4 w-48">
+                        <img class="w-16 h-16 mb-4" src="<%= weather[0].icon %>" alt="">
+                        <div class="text-center">
+                            <span class="text-base font-semibold"><%= weather[0].name %>:</span>
+                            <span class="text-lg block font-bold"><%= weather[0].temperature %>°</span>
+                        </div>
+                    </div>
+                <% } else { %>
+                    <div class="flex flex-col items-center card bg-blue-100 shadow-lg rounded-lg p-4 w-48 mr-4">
+                        <img class="w-16 h-16 mb-4" src="<%= weather[0].icon %>" alt="">
+                        <div class="text-center">
+                            <span class="text-base font-semibold"><%= weather[0].name %>:</span>
+                            <span class="text-lg block font-bold"><%= weather[0].temperature %>°</span>
+                        </div>
+                    </div>
+                    <div class="flex flex-col items-center card bg-blue-100 shadow-lg rounded-lg p-4 w-48">
+                        <img class="w-16 h-16 mb-4" src="<%= weather[1].icon %>" alt="">
+                        <div class="text-center">
+                            <span class="text-base font-semibold"><%= weather[1].name %>:</span>
+                            <span class="text-lg block font-bold"><%= weather[1].temperature %>°</span>
+                        </div>
+                    </div>
+                <% } %>
+            <% } else { %>
+                <p>No weather data available.</p>
+            <% } %>
+        </div>
+
+        <!-- Remaining Days Container -->
+        <div class="flex flex-wrap justify-center gap-4">
+            <% if (weather && weather.length > 0) { %>
+                <% for (let i = weather[0].name.includes('night') ? 1 : 2; i < 13 ; i += 2) { %>
+                    <div class="flex flex-col items-center card bg-white shadow-lg rounded-lg p-4 w-1/4">
+                        <img class="w-16 h-16 mb-4" src="<%= weather[i].icon %>" alt="">
+                        <div class="flex flex-col text-center">
+                            <span class="text-base font-semibold"><%= weather[i].name %>:</span>
+                            <span class="text-lg font-semibold"><%= weather[i].temperature %>° / <%= weather[i+1] ? weather[i+1].temperature : '' %>°</span>
+                        </div>
+                    </div>
+                <% } %>
+            <% } %>
+        </div>
+    </div>
+    <script src="/js/main.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=<%= googleMapsApiKey %>&libraries=places&callback=initAutocomplete" async defer></script>
+</body>
+</html>
