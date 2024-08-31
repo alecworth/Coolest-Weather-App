@@ -1,4 +1,4 @@
-# Cool Weather App
+# Coolest Weather App
 
 A weather application that provides current weather data and forecasts for any location using the Google Maps JS API. 
 
